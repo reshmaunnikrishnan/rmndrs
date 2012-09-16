@@ -30,6 +30,9 @@
 @synthesize time;
 @synthesize frequency;
 
+@synthesize managedObject = __managedObject;
+@synthesize managedObjectContext = __managedObjectContext;
+
 - (void)dealloc
 {
 //    [super dealloc];
@@ -81,9 +84,9 @@
         self.title = viewTitle;
     }
     
-
-    
     [timeButton setTitle:[GlobalSettings interpretUserTime:time] forState:UIControlStateNormal];
+    
+    NSLog(@"NAME : %@ -- PHONE : %@ -- TIME : %@ -- FRQ : %@", name, phone, time, frequency);
 } 
 
 - (void)viewDidAppear:(BOOL)animated

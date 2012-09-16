@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		D200DB86160284D50035C4F4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D200DB85160284D50035C4F4 /* CoreData.framework */; };
+		D200DBFE1605DFDA0035C4F4 /* Reminders.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D200DBFC1605DFDA0035C4F4 /* Reminders.xcdatamodeld */; };
+		D200DC011605E6BA0035C4F4 /* Reminders.m in Sources */ = {isa = PBXBuildFile; fileRef = D200DC001605E6BA0035C4F4 /* Reminders.m */; };
 		D21D13A915F9428800549CB4 /* red_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D21D13A815F9428800549CB4 /* red_button.png */; };
 		D21D13AD15F943A900549CB4 /* delete_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D21D13AC15F943A900549CB4 /* delete_icon.png */; };
 		D21D13AF15F9441400549CB4 /* grey_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D21D13AE15F9441400549CB4 /* grey_button.png */; };
@@ -57,6 +59,9 @@
 
 /* Begin PBXFileReference section */
 		D200DB85160284D50035C4F4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		D200DBFD1605DFDA0035C4F4 /* Reminders.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Reminders.xcdatamodel; sourceTree = "<group>"; };
+		D200DBFF1605E6BA0035C4F4 /* Reminders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reminders.h; path = ../Reminders.h; sourceTree = "<group>"; };
+		D200DC001605E6BA0035C4F4 /* Reminders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reminders.m; path = ../Reminders.m; sourceTree = "<group>"; };
 		D21D13A815F9428800549CB4 /* red_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_button.png; sourceTree = "<group>"; };
 		D21D13AC15F943A900549CB4 /* delete_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete_icon.png; sourceTree = "<group>"; };
 		D21D13AE15F9441400549CB4 /* grey_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grey_button.png; sourceTree = "<group>"; };
@@ -132,6 +137,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D200DC021605E6C70035C4F4 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D200DBFC1605DFDA0035C4F4 /* Reminders.xcdatamodeld */,
+				D200DBFF1605E6BA0035C4F4 /* Reminders.h */,
+				D200DC001605E6BA0035C4F4 /* Reminders.m */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
 		D2A6BF3A16025CD500B586B9 /* badgeview */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +211,7 @@
 		D2CF6E6E15F16EA200EC6589 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D200DC021605E6C70035C4F4 /* Data */,
 				D2A6BF3A16025CD500B586B9 /* badgeview */,
 				D2CF6EFA15F37FF500EC6589 /* icons */,
 				D2CF6E9215F16F4A00EC6589 /* Images */,
@@ -352,6 +368,8 @@
 				D2CF6EA815F19D5C00EC6589 /* DDBadgeViewCell.m in Sources */,
 				D2CF6EC815F2284D00EC6589 /* MasterViewController.m in Sources */,
 				D2CF6ED415F23A7100EC6589 /* SettingsViewController.m in Sources */,
+				D200DBFE1605DFDA0035C4F4 /* Reminders.xcdatamodeld in Sources */,
+				D200DC011605E6BA0035C4F4 /* Reminders.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +450,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Rmndrs/Rmndrs-Prefix.pch";
 				INFOPLIST_FILE = "Rmndrs/Rmndrs-Info.plist";
@@ -444,6 +463,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Rmndrs/Rmndrs-Prefix.pch";
 				INFOPLIST_FILE = "Rmndrs/Rmndrs-Info.plist";
@@ -474,6 +494,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D200DBFC1605DFDA0035C4F4 /* Reminders.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D200DBFD1605DFDA0035C4F4 /* Reminders.xcdatamodel */,
+			);
+			currentVersion = D200DBFD1605DFDA0035C4F4 /* Reminders.xcdatamodel */;
+			name = Reminders.xcdatamodeld;
+			path = ../Reminders.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D2CF6E5A15F16EA200EC6589 /* Project object */;
 }

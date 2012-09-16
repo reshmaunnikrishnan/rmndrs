@@ -21,6 +21,10 @@
 #define SOONBADGESECTION 1
 #define AFTERBADGESECTION 2
 
+@interface MasterViewController ()
+- (void)configureCell:(DDBadgeViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+@end
+
 @implementation MasterViewController
 
 @synthesize detailViewController = _detailViewController;
@@ -30,6 +34,12 @@
 @synthesize remindersSoon;
 @synthesize remindersAfter;
 
+@synthesize fetchedResultsController = __fetchedResultsController;
+@synthesize managedObjectContext = __managedObjectContext;
+
+#pragma mark -
+#pragma mark Initialization
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -38,12 +48,6 @@
         self.tableView.rowHeight = 60.0;
     }
     return self;
-}
-							
-- (void)dealloc
-{
-//    [_detailViewController release];
-//    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning
@@ -64,7 +68,6 @@
     
     [self customizeTable];
     
-    [self getAllReminderDetails];
 }
 
 - (void)viewDidUnload
@@ -103,14 +106,13 @@
 // Customize the number of sections in the table view.
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [remindersAll count];
+    return [[self.fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSDictionary *dictionary = [remindersAll objectAtIndex:section];
-    NSArray *array = [dictionary objectForKey:@"Reminders"];
-    return [array count];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
 }
 
 // Customize the appearance of table view cells.
@@ -123,13 +125,20 @@
         cell = [[DDBadgeViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
-
-    NSDictionary *dictionary = [remindersAll objectAtIndex:indexPath.section];
-    NSArray *array = [dictionary objectForKey:@"Reminders"];
-    NSDictionary *details = [array objectAtIndex:indexPath.row];
     
-    cell.summary = [details objectForKey:@"name"];
-    cell.detail = [details objectForKey:@"number"];
+    [self configureCell:cell atIndexPath:indexPath];
+    
+    cell.badgeHighlightedColor = [GlobalSettings badgeSelectedColor];
+    cell.imageView.image = [UIImage imageNamed:@"contact.png"];
+    
+    return cell;
+}
+
+- (void)configureCell:(DDBadgeViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    NSManagedObject *managedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.summary = [managedObject valueForKey:@"name"];
+    cell.detail = [managedObject valueForKey:@"phone"];
     
     if(indexPath.section == NOWBADGESECTION) {
         cell.badgeText = @"Now";
@@ -141,12 +150,6 @@
         cell.badgeText = @"After";
         cell.badgeColor = [GlobalSettings badgeAfterColor];
     }
-    
-    cell.badgeHighlightedColor = [GlobalSettings badgeSelectedColor];
-    
-    cell.imageView.image = [UIImage imageNamed:@"contact.png"];
-    
-    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(DDBadgeViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -155,20 +158,18 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{    
     if (!self.detailViewController) {
         self.detailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
     }
+    NSManagedObject *selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+    self.detailViewController.managedObject = selectedObject;   
     
-    NSDictionary *dictionary = [remindersAll objectAtIndex:indexPath.section];
-    NSArray *array = [dictionary objectForKey:@"Reminders"];
-    NSDictionary *details = [array objectAtIndex:indexPath.row];
+    self.detailViewController.name = (NSString *)[selectedObject valueForKey:@"name"];
+    self.detailViewController.phone = (NSString *)[selectedObject valueForKey:@"phone"];
     
-    self.detailViewController.name = [details objectForKey:@"name"];
-    self.detailViewController.phone = [details objectForKey:@"number"];
-    
-    self.detailViewController.frequency = [details objectForKey:@"frequency"];
-    self.detailViewController.time = [GlobalSettings convertStringToDate:[details objectForKey:@"time"]];
+    self.detailViewController.frequency = (NSString *)[selectedObject valueForKey:@"freq"];
+    self.detailViewController.time = [selectedObject valueForKey:@"time"];
     
     self.detailViewController.viewTitle = @"Edit Rmndr";
     
@@ -295,30 +296,105 @@
     self.tableView.backgroundColor = [GlobalSettings backImage];
 }
 
--(void) getAllReminderDetails
-{
-    remindersSoon = [[NSMutableArray alloc] init];
-    remindersAfter = [[NSMutableArray alloc] init];
-    remindersNow = [[NSMutableArray alloc] init];
+// Core Data Stuff
 
-    [remindersNow addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Jayasurian Makoth", @"name", @"1509827387", @"number", @"1d", @"frequency", @"02:40 PM", @"time", nil]];
-    [remindersNow addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Dinesh Vasudevan", @"name", @"847384738", @"number", @"3d", @"frequency", @"12:50 PM", @"time", nil]];
-    [remindersNow addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Unnikrishnan", @"name", @"9889080982", @"number", @"4d", @"frequency", @"05:30 AM",@"time", nil]];
-    NSDictionary *remindersNowDict = [NSDictionary dictionaryWithObject:remindersNow forKey:@"Reminders"];
+#pragma mark - Fetched results controller
+
+- (NSFetchedResultsController *)fetchedResultsController
+{
+    if (__fetchedResultsController != nil) {
+        return __fetchedResultsController;
+    }
     
-    [remindersAfter addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Thangu", @"name", @"9090098984", @"number", @"3d", @"frequency", @"10:20 AM", @"time", nil]];
-    [remindersAfter addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Ponnu", @"name", @"8748789749", @"number", @"5d", @"frequency", @"01:00 PM", @"time", nil]];
-    NSDictionary *remindersAfterDict = [NSDictionary dictionaryWithObject:remindersAfter forKey:@"Reminders"];
+    // Set up the fetched results controller.
+    // Create the fetch request for the entity.
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    // Edit the entity name as appropriate.
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Reminders" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
     
-    [remindersSoon addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Peratta Thalla", @"name", @"7632763862", @"number",@"10d", @"frequency", @"04:30 PM", @"time", nil]];
-    NSDictionary *remindersSoonDict = [NSDictionary dictionaryWithObject:remindersSoon forKey:@"Reminders"];
+    // Set the batch size to a suitable number.
+    [fetchRequest setFetchBatchSize:20];
     
-    remindersAll = [[NSMutableArray alloc] init];
+    // Edit the sort key as appropriate.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"freq" ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
     
-    [remindersAll addObject:remindersNowDict];
-    [remindersAll addObject:remindersSoonDict];
-    [remindersAll addObject:remindersAfterDict];
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    // Edit the section name key path and cache name if appropriate.
+    // nil for section name key path means "no sections".
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"sectionIdentifier" cacheName:@"Master"];
+    aFetchedResultsController.delegate = self;
+    self.fetchedResultsController = aFetchedResultsController;
+    
+	NSError *error = nil;
+	if (![self.fetchedResultsController performFetch:&error]) {
+	    /*
+	     Replace this implementation with code to handle the error appropriately.
+         
+	     abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+	     */
+	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	    abort();
+	}
+    
+    NSLog(@"FECTHED DATA :: %@", sortDescriptors);
+    
+    return __fetchedResultsController;
+}    
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView beginUpdates];
 }
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+{
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath
+{
+    UITableView *tableView = self.tableView;
+    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView endUpdates];
+}
+
+// End Core Data Stuff
 
 -(void) clearAllReminderDetails
 {
@@ -365,14 +441,46 @@
     
     self.detailViewController.name = name;
     self.detailViewController.phone = phone;
+    self.detailViewController.time = [[NSDate alloc] init];
+    self.detailViewController.frequency = @"3d";
     
     self.detailViewController.viewTitle = @"New Rmndr";
     
+    [self insertNewObject:self.detailViewController];
     
     [self.navigationController pushViewController:self.detailViewController animated:YES];
     
 }
 
 // Picker Controller Callback End
+
+// Core data Insert
+
+- (void)insertNewObject:(DetailViewController *) detailViewController
+{
+    // Create a new instance of the entity managed by the fetched results controller.
+    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
+    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    
+    [newManagedObject setValue:detailViewController.name forKey:@"name"];
+    [newManagedObject setValue:detailViewController.phone forKey:@"phone"];
+    [newManagedObject setValue:detailViewController.time forKey:@"time"];
+    [newManagedObject setValue:detailViewController.frequency forKey:@"freq"];
+    
+    // Save the context.
+    NSError *error = nil;
+    if (![context save:&error]) {
+        /*
+         Replace this implementation with code to handle the error appropriately.
+         
+         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+         */
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+}
+
+// Core data Insert End
 
 @end

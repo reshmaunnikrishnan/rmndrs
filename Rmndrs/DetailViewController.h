@@ -22,6 +22,9 @@
     NSString *viewTitle;
     NSDate   *time;
     NSString *frequency;
+    
+    NSManagedObjectContext *managedObjectContext;
+    NSManagedObject *managedObject;
 }
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
@@ -35,6 +38,9 @@
 @property (strong, nonatomic) NSString *viewTitle;
 @property (strong, nonatomic) NSDate   *time;
 @property (strong, nonatomic) NSString *frequency;
+
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) NSManagedObject *managedObject;
 
 -(IBAction)actionSheetDatePickerPopUp:(id)sender;
 

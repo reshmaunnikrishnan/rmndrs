@@ -11,15 +11,23 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 
+#import <CoreData/CoreData.h>
+
+#import "Reminders.h"
+
+@class AppDelegate;
 @class DetailViewController;
 
 @interface MasterViewController : UITableViewController <
-    ABPeoplePickerNavigationControllerDelegate>
+    ABPeoplePickerNavigationControllerDelegate, NSFetchedResultsControllerDelegate>
 {
     NSMutableArray *remindersNow;
     NSMutableArray *remindersSoon;
     NSMutableArray *remindersAfter;
     NSMutableArray *remindersAll;
+    
+    NSManagedObjectContext *managedObjectContext;
+    
 }
 
 @property (strong, nonatomic) NSMutableArray *remindersNow;
@@ -29,6 +37,9 @@
 
 @property (strong, nonatomic) DetailViewController *detailViewController;
 
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 -(void) createSettingsBarButton;
 -(void) clickedSettings;
 -(void) createAddContactsBarButton;
@@ -36,7 +47,7 @@
 -(void) customizeNavBar;
 -(void) customizeTable;
 
--(void) getAllReminderDetails;
+- (void)insertNewObject:(DetailViewController *) detailViewController;
 
 - (void)displayPerson:(ABRecordRef)person;
 
