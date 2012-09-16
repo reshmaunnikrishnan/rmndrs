@@ -2,7 +2,7 @@
 //  GlobalSettings.m
 //  Rmndrs
 //
-//  Created by Dinesh Vasudevan on 01/09/12.
+//  Created by Reshma Unnikrishnan on 01/09/12.
 //  Copyright (c) 2012 Personal. All rights reserved.
 //
 
