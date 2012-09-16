@@ -32,7 +32,7 @@
 
 - (void)dealloc
 {
-    [super dealloc];
+//    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning
@@ -140,7 +140,7 @@
     [datePicker setTag: datePickerTag];
     
 //    [datePicker autorelease];
-    [actionSheet autorelease];
+//    [actionSheet autorelease];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex

@@ -42,9 +42,8 @@
 							
 - (void)dealloc
 {
-    NSLog(@"REALEASE");
-    [_detailViewController release];
-    [super dealloc];
+//    [_detailViewController release];
+//    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning
@@ -121,7 +120,7 @@
     
     DDBadgeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[DDBadgeViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[DDBadgeViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
@@ -158,7 +157,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (!self.detailViewController) {
-        self.detailViewController = [[[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil] autorelease];
+        self.detailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
     }
     
     NSDictionary *dictionary = [remindersAll objectAtIndex:indexPath.section];
@@ -192,7 +191,7 @@
 
 -(void) clickedSettings
 {
-    SettingsViewController *settings = [[[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil] autorelease];
+    SettingsViewController *settings = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
     [self.navigationController pushViewController:settings animated:YES];}
 
 -(void) createAddContactsBarButton
@@ -219,7 +218,7 @@
 	// showing the picker
 	[self presentModalViewController:picker animated:YES];
 	// releasing
-	[picker release];
+//	[picker release];
 }
 
 -(void) customizeNavBar
@@ -361,7 +360,7 @@
     }
     
     if (!self.detailViewController) {
-        self.detailViewController = [[[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil] autorelease];
+        self.detailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
     }
     
     self.detailViewController.name = name;

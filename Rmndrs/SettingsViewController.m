@@ -80,9 +80,9 @@
     cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         if(badgeValue == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         } else {
-            cell = [[[DDBadgeViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier withImage:TRUE] autorelease];
+            cell = [[DDBadgeViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier withImage:TRUE];
         }
 //        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -96,7 +96,7 @@
             cell.accessoryView = switchView;
             [switchView setOn:NO animated:NO];
             [switchView addTarget:self action:@selector(switchChanged) forControlEvents:UIControlEventValueChanged];
-            [switchView release];
+//            [switchView release];
 //        }
     } else {
         cell.summary = [cellDict objectForKey:@"title"];

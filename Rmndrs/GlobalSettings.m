@@ -72,7 +72,7 @@ static NSString *baseBackground = @"Stripe.png";
         date = [[NSDate alloc] init];
     }
     formattedString = [df stringFromDate:date];
-    [df release];
+//    [df release];
     
     NSLog(@"Date GOT :%@  String CREATED %@", date, formattedString);
     

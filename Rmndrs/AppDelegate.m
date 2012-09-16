@@ -17,9 +17,9 @@
 
 - (void)dealloc
 {
-    [_window release];
-    [_navigationController release];
-    [super dealloc];
+//    [_window release];
+//    [_navigationController release];
+//    [super dealloc];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -27,11 +27,11 @@
     sleep(2);
     
     
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
 
-    MasterViewController *masterViewController = [[[MasterViewController alloc] initWithNibName:@"MasterViewController" bundle:nil] autorelease];
-    self.navigationController = [[[UINavigationController alloc] initWithRootViewController:masterViewController] autorelease];
+    MasterViewController *masterViewController = [[MasterViewController alloc] initWithNibName:@"MasterViewController" bundle:nil] ;
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
    
     self.window.rootViewController = self.navigationController;
 

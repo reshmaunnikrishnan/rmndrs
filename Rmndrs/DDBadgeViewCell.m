@@ -35,7 +35,7 @@
 @interface DDBadgeView : UIView {
 	
 @private
-	DDBadgeViewCell *cell_;
+	DDBadgeViewCell __unsafe_unretained *cell_;
 }
 
 @property (nonatomic, assign) DDBadgeViewCell *cell;
@@ -169,15 +169,15 @@
 
 - (void)dealloc {
 	
-	[badgeView_ release], badgeView_ = nil;
-	
-    [summary_ release], summary_ = nil;
-    [detail_ release], detail_ = nil;
-	[badgeText_ release], badgeText_ = nil;
-	[badgeColor_ release], badgeColor_ = nil;
-	[badgeHighlightedColor_ release], badgeHighlightedColor_ = nil;
-	
-    [super dealloc];
+//	[badgeView_ release], badgeView_ = nil;
+//	
+//    [summary_ release], summary_ = nil;
+//    [detail_ release], detail_ = nil;
+//	[badgeText_ release], badgeText_ = nil;
+//	[badgeColor_ release], badgeColor_ = nil;
+//	[badgeHighlightedColor_ release], badgeHighlightedColor_ = nil;
+//	
+//    [super dealloc];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withImage:(BOOL) withImage{
