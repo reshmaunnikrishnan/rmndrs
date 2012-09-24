@@ -30,13 +30,8 @@
 @synthesize time;
 @synthesize frequency;
 
-@synthesize managedObject = __managedObject;
+@synthesize managedObject;
 @synthesize managedObjectContext = __managedObjectContext;
-
-- (void)dealloc
-{
-//    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -72,6 +67,13 @@
 {
     [super viewWillAppear:animated];
     
+    if(managedObject != nil) {
+        name = [managedObject valueForKey:@"name"];
+        phone = [managedObject valueForKey:@"phone"];
+        frequency = [managedObject valueForKey:@"freq"];
+        time = [managedObject valueForKey:@"time"];
+    }
+    
     if (name != nil) {
         nameLabel.text = name;
     }
@@ -85,8 +87,6 @@
     }
     
     [timeButton setTitle:[GlobalSettings interpretUserTime:time] forState:UIControlStateNormal];
-    
-    NSLog(@"NAME : %@ -- PHONE : %@ -- TIME : %@ -- FRQ : %@", name, phone, time, frequency);
 } 
 
 - (void)viewDidAppear:(BOOL)animated
@@ -132,8 +132,6 @@
     datePicker.datePickerMode = UIDatePickerModeTime;
     [datePicker setMinuteInterval:10];
     
-    NSLog(@"ACTION SHEET PICKER GOT TIME %@", time);
-    
     [datePicker setDate:time];                            
     [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
     
@@ -141,9 +139,6 @@
     [actionSheet addSubview:datePicker];
 
     [datePicker setTag: datePickerTag];
-    
-//    [datePicker autorelease];
-//    [actionSheet autorelease];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -153,8 +148,12 @@
         UIDatePicker *datePicker = (UIDatePicker *) [actionSheet viewWithTag: datePickerTag];
         
         time = datePicker.date;
+        [timeButton setTitle:[GlobalSettings interpretUserTime:time] forState:UIControlStateNormal]; 
         
-        [timeButton setTitle:[GlobalSettings interpretUserTime:time] forState:UIControlStateNormal];
+        if(managedObject) {
+            [managedObject setValue:time forKey:@"time"];
+        }
+        
     }
 }
 

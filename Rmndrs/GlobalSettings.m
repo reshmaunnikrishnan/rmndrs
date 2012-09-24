@@ -70,6 +70,7 @@ static NSString *baseBackground = @"Stripe.png";
     [df setTimeStyle:NSDateFormatterShortStyle];
     if(date == nil) {
         date = [[NSDate alloc] init];
+        
     }
     formattedString = [df stringFromDate:date];
 //    [df release];

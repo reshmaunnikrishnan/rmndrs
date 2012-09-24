@@ -30,7 +30,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *numberLabel;
 @property (strong, nonatomic) IBOutlet UIButton *everyDayButton;
-@property (strong, nonatomic) IBOutlet UIButton *timeButton;
+@property (nonatomic,retain) IBOutlet UIButton *timeButton;
 @property (strong, nonatomic) IBOutlet UIButton *deleteButton;
 
 @property (strong, nonatomic) NSString *name;

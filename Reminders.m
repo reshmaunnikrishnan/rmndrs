@@ -26,20 +26,21 @@
     
     NSLog(@"SECTION IDENTIFIER CALLED");
     
-    NSDate *theStartDate = self.lastcalled;
+    NSDate *theStartDate = self.lastcalled; // Got yesterdays date
     if(theStartDate == nil) {
-        theStartDate = [[NSDate alloc] init];
+        theStartDate = [[NSDate alloc] init]; // Got todays date
     }
     
-    NSTimeInterval timeDiff = [theStartDate timeIntervalSinceNow];
+    NSTimeInterval timeDiff = [theStartDate timeIntervalSinceNow]; // (60*60*24)
     
     return [self frequencyTranslated:timeDiff];
 }
 
 - (NSString *) frequencyTranslated:(NSTimeInterval) timeDiff {
     int days = floor(timeDiff/(60*60*24));
-    int calculatedF = [self.freq intValue];
+    int calculatedF = [self.freq intValue]; // ["5d" intValue] = 5
     int dateDiff = calculatedF - days;
+
     
     if(dateDiff < 1) { // This goes to the now section
         return @"now";

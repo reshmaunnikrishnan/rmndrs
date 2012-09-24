@@ -13,26 +13,15 @@
 
 #import "GlobalSettings.h"
 
-#import "DDBadgeViewCell.h"
-
 #define NAVCOLOR [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1]
 
 #define NOWBADGESECTION 0
 #define SOONBADGESECTION 1
 #define AFTERBADGESECTION 2
 
-@interface MasterViewController ()
-- (void)configureCell:(DDBadgeViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-@end
-
 @implementation MasterViewController
 
 @synthesize detailViewController = _detailViewController;
-
-@synthesize remindersAll;
-@synthesize remindersNow;
-@synthesize remindersSoon;
-@synthesize remindersAfter;
 
 @synthesize fetchedResultsController = __fetchedResultsController;
 @synthesize managedObjectContext = __managedObjectContext;
@@ -164,13 +153,7 @@
     }
     NSManagedObject *selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
     self.detailViewController.managedObject = selectedObject;   
-    
-    self.detailViewController.name = (NSString *)[selectedObject valueForKey:@"name"];
-    self.detailViewController.phone = (NSString *)[selectedObject valueForKey:@"phone"];
-    
-    self.detailViewController.frequency = (NSString *)[selectedObject valueForKey:@"freq"];
-    self.detailViewController.time = [selectedObject valueForKey:@"time"];
-    
+        
     self.detailViewController.viewTitle = @"Edit Rmndr";
     
     [self.navigationController pushViewController:self.detailViewController animated:YES];
@@ -193,7 +176,8 @@
 -(void) clickedSettings
 {
     SettingsViewController *settings = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
-    [self.navigationController pushViewController:settings animated:YES];}
+    [self.navigationController pushViewController:settings animated:YES];
+}
 
 -(void) createAddContactsBarButton
 {
@@ -218,8 +202,6 @@
 	
 	// showing the picker
 	[self presentModalViewController:picker animated:YES];
-	// releasing
-//	[picker release];
 }
 
 -(void) customizeNavBar
@@ -410,8 +392,7 @@
     return NO;
 }
 
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person 
-                                property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
 {
     return NO;
 }
@@ -435,18 +416,25 @@
         phone = @"[None]";
     }
     
+//    Check if person exists in the db .. else add otherwise error !
+    
     if (!self.detailViewController) {
         self.detailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
     }
     
-    self.detailViewController.name = name;
-    self.detailViewController.phone = phone;
-    self.detailViewController.time = [[NSDate alloc] init];
-    self.detailViewController.frequency = @"3d";
-    
     self.detailViewController.viewTitle = @"New Rmndr";
     
-    [self insertNewObject:self.detailViewController];
+    NSDate *defaultDate = [[NSDate alloc] init];
+    NSDateComponents *time = [[NSCalendar currentCalendar]
+                              components: NSHourCalendarUnit | NSMinuteCalendarUnit
+                              fromDate: defaultDate];
+    NSUInteger remainder = ([time minute] % 10);
+    if (remainder < 5)
+        defaultDate = [defaultDate addTimeInterval: -60 * remainder];
+    else
+        defaultDate = [defaultDate addTimeInterval: 60 * (10 - remainder)];
+    
+    self.detailViewController.managedObject = [self insertNewObject:name phone:phone time:defaultDate frequency:@"3d"];
     
     [self.navigationController pushViewController:self.detailViewController animated:YES];
     
@@ -456,17 +444,17 @@
 
 // Core data Insert
 
-- (void)insertNewObject:(DetailViewController *) detailViewController
+- (NSManagedObject *)insertNewObject:(NSString *)name phone:(NSString *)phone time:(NSDate *)time frequency:(NSString *)freq
 {
     // Create a new instance of the entity managed by the fetched results controller.
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
     NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
     
-    [newManagedObject setValue:detailViewController.name forKey:@"name"];
-    [newManagedObject setValue:detailViewController.phone forKey:@"phone"];
-    [newManagedObject setValue:detailViewController.time forKey:@"time"];
-    [newManagedObject setValue:detailViewController.frequency forKey:@"freq"];
+    [newManagedObject setValue:name forKey:@"name"];
+    [newManagedObject setValue:phone forKey:@"phone"];
+    [newManagedObject setValue:time forKey:@"time"];
+    [newManagedObject setValue:freq forKey:@"freq"];
     
     // Save the context.
     NSError *error = nil;
@@ -479,6 +467,7 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
+    return newManagedObject;
 }
 
 // Core data Insert End

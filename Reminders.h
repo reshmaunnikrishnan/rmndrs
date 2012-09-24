@@ -15,7 +15,7 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * phone;
 @property (nonatomic, retain) NSString * freq;
-@property (nonatomic, retain) NSDate * time;
+@property (nonatomic, retain) NSDate   * time;
 @property (nonatomic, retain) NSDate   * lastcalled;
 
 @property (nonatomic, retain) NSString *sectionIdentifier;

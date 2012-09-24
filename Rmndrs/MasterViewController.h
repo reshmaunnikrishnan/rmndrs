@@ -15,25 +15,16 @@
 
 #import "Reminders.h"
 
+#import "DDBadgeViewCell.h"
+
 @class AppDelegate;
 @class DetailViewController;
 
 @interface MasterViewController : UITableViewController <
     ABPeoplePickerNavigationControllerDelegate, NSFetchedResultsControllerDelegate>
 {
-    NSMutableArray *remindersNow;
-    NSMutableArray *remindersSoon;
-    NSMutableArray *remindersAfter;
-    NSMutableArray *remindersAll;
-    
     NSManagedObjectContext *managedObjectContext;
-    
 }
-
-@property (strong, nonatomic) NSMutableArray *remindersNow;
-@property (strong, nonatomic) NSMutableArray *remindersSoon;
-@property (strong, nonatomic) NSMutableArray *remindersAfter;
-@property (strong, nonatomic) NSMutableArray *remindersAll;
 
 @property (strong, nonatomic) DetailViewController *detailViewController;
 
@@ -47,8 +38,10 @@
 -(void) customizeNavBar;
 -(void) customizeTable;
 
-- (void)insertNewObject:(DetailViewController *) detailViewController;
+- (NSManagedObject *)insertNewObject:(NSString *)name phone:(NSString *)phone time:(NSDate *)time frequency:(NSString *)freq;
 
 - (void)displayPerson:(ABRecordRef)person;
+
+- (void)configureCell:(DDBadgeViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 @end

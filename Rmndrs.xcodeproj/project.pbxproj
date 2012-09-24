@@ -194,6 +194,7 @@
 				D2CF6E7715F16EA200EC6589 /* AppDelegate.m */,
 				D2CF6E7915F16EA200EC6589 /* MasterViewController.h */,
 				D2CF6EC715F2284D00EC6589 /* MasterViewController.m */,
+				D2CF6E8215F16EA200EC6589 /* DetailViewController.xib */,
 				D2CF6ED115F23A7000EC6589 /* SettingsViewController.h */,
 				D2CF6ED215F23A7000EC6589 /* SettingsViewController.m */,
 				D2CF6ED315F23A7100EC6589 /* SettingsViewController.xib */,
@@ -202,7 +203,6 @@
 				D2CF6E9415F1828700EC6589 /* GlobalSettings.m */,
 				D2CF6E7C15F16EA200EC6589 /* DetailViewController.h */,
 				D2CF6E7D15F16EA200EC6589 /* DetailViewController.m */,
-				D2CF6E8215F16EA200EC6589 /* DetailViewController.xib */,
 				D2CF6E6E15F16EA200EC6589 /* Supporting Files */,
 			);
 			path = Rmndrs;
