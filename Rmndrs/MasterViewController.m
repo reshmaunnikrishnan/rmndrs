@@ -151,6 +151,8 @@
     if (!self.detailViewController) {
         self.detailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
     }
+    self.detailViewController.managedObjectContext = [self.fetchedResultsController managedObjectContext];
+    NSLog(@"GOT MANAGED OBJECT %@", self.detailViewController.managedObjectContext);
     NSManagedObject *selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
     self.detailViewController.managedObject = selectedObject;   
         
@@ -421,6 +423,7 @@
     if (!self.detailViewController) {
         self.detailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
     }
+    self.detailViewController.managedObjectContext = [self.fetchedResultsController managedObjectContext];
     
     self.detailViewController.viewTitle = @"New Rmndr";
     

@@ -31,7 +31,7 @@
 @synthesize frequency;
 
 @synthesize managedObject;
-@synthesize managedObjectContext = __managedObjectContext;
+@synthesize managedObjectContext;
 
 - (void)didReceiveMemoryWarning
 {
@@ -158,5 +158,28 @@
 }
 
 // Time Picker Code End
+
+// Delete Button Callback
+
+-(IBAction)deleteReminder:(id)sender {
+    if (managedObjectContext != nil && managedObject != nil) {
+        [managedObjectContext deleteObject:managedObject];
+        // Save the context.
+        NSError *error = nil;
+        if (![managedObjectContext save:&error]) {
+            /*
+             Replace this implementation with code to handle the error appropriately.
+             
+             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+             */
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+// End Delete Button Callback
 							
 @end

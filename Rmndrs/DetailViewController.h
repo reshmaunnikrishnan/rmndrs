@@ -43,5 +43,6 @@
 @property (strong, nonatomic) NSManagedObject *managedObject;
 
 -(IBAction)actionSheetDatePickerPopUp:(id)sender;
+-(IBAction)deleteReminder:(id)sender;
 
 @end
