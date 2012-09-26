@@ -97,4 +97,15 @@ static NSString *baseBackground = @"Stripe.png";
     
 }
 
++(NSString *) interpretUserfrequency:(NSString *) frequency{
+    int s = [frequency intValue]; 
+    NSString *freqstrng;
+    if (s==1) {
+        freqstrng  = [NSString stringWithFormat:@" %d Day", s];
+    } else {
+        freqstrng = [NSString stringWithFormat:@" %d Days", s];
+    }
+    return freqstrng;
+}
+
 @end

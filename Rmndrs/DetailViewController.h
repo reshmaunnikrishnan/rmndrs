@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DetailViewController : UIViewController<UIActionSheetDelegate>
+@interface DetailViewController : UIViewController<UIActionSheetDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 {
     IBOutlet UILabel *nameLabel;
     IBOutlet UILabel *numberLabel;
@@ -22,6 +22,8 @@
     NSString *viewTitle;
     NSDate   *time;
     NSString *frequency;
+    NSString *noOfTimes;
+    NSMutableArray *freqDays;
     
     NSManagedObjectContext *managedObjectContext;
     NSManagedObject *managedObject;
@@ -36,13 +38,19 @@
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *phone;
 @property (strong, nonatomic) NSString *viewTitle;
+
 @property (strong, nonatomic) NSDate   *time;
 @property (strong, nonatomic) NSString *frequency;
+@property (strong, nonatomic) NSMutableArray *freqDays;
+@property (strong, nonatomic) NSMutableArray *freqDayConverted;
+
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSManagedObject *managedObject;
 
 -(IBAction)actionSheetDatePickerPopUp:(id)sender;
 -(IBAction)deleteReminder:(id)sender;
+
+-(IBAction)actionSheetFrequencyPickerPopUp:(id)sender;
 
 @end

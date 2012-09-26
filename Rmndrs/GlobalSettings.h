@@ -21,6 +21,8 @@
 +(UIColor *) badgeSelectedColor;
 
 +(NSString *) interpretUserTime:(NSDate *) date;
++(NSString *) interpretUserfrequency:(NSString *) frequency;
+
 +(NSString *) interpretUserDay:(UIPickerView *) picker;
 +(NSDate *) convertStringToDate:(NSString *) dateStr;
 
