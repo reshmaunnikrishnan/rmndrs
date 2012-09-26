@@ -125,17 +125,17 @@
 
 - (void)configureCell:(DDBadgeViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *managedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Reminders *managedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.summary = [managedObject valueForKey:@"name"];
     cell.detail = [managedObject valueForKey:@"phone"];
     
-    if(indexPath.section == NOWBADGESECTION) {
+    if(managedObject.sectionIdentifier == @"now") {
         cell.badgeText = @"Now";
         cell.badgeColor = [GlobalSettings badgeNowColor];
-    } else if(indexPath.section == SOONBADGESECTION) {
+    } else if(managedObject.sectionIdentifier == @"soon") {
         cell.badgeText = @"Soon";
         cell.badgeColor = [GlobalSettings badgeSoonColor];
-    } else if(indexPath.section == AFTERBADGESECTION) {
+    } else if(managedObject.sectionIdentifier == @"after") {
         cell.badgeText = @"After";
         cell.badgeColor = [GlobalSettings badgeAfterColor];
     }
@@ -353,9 +353,12 @@
 {
     UITableView *tableView = self.tableView;
     
+    NSLog(@"INDEX PATHS %@ -- %@", indexPath, newIndexPath);
+    
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [self configureCell:[tableView cellForRowAtIndexPath:newIndexPath] atIndexPath:newIndexPath];
             break;
             
         case NSFetchedResultsChangeDelete:
@@ -363,12 +366,13 @@
             break;
             
         case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:newIndexPath];
             break;
             
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:newIndexPath];
             break;
     }
 }

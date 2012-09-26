@@ -32,23 +32,30 @@
     }
     
     NSTimeInterval timeDiff = [theStartDate timeIntervalSinceNow]; // (60*60*24)
-    
-    return [self frequencyTranslated:timeDiff];
+    NSString *sectn = [self frequencyTranslated:timeDiff];
+    NSLog(sectn);
+    return sectn;
 }
 
 - (NSString *) frequencyTranslated:(NSTimeInterval) timeDiff {
     int days = floor(timeDiff/(60*60*24));
+    if(days < 0) {
+        days = days * -1;
+    }
     int calculatedF = [self.freq intValue]; // ["5d" intValue] = 5
     int dateDiff = calculatedF - days;
-
     
+    NSLog(@"Days --> %d", days);
+    NSLog(@"Calculated F --> %d", calculatedF);
+    NSLog(@"Datediff --> %d", dateDiff);
+
     if(dateDiff < 1) { // This goes to the now section
         return @"now";
     }
-    if(dateDiff < 3) { // This goes to the after section
+    if(dateDiff < 3) { // This goes to the soon section
         return @"soon";
     }
-    return @"after"; // This goes ot the soon section
+    return @"after"; // This goes to the after section
 }
 
 + (NSSet *)keyPathsForValuesAffectingSectionIdentifier {
