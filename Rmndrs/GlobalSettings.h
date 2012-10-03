@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+#define DB_ALARM_KEY @"Alarm"
+#define DB_REMINDER_KEY @"Reminder Before"
+#define DB_SNOOZE_KEY @"Snooze"
+
 @interface GlobalSettings : NSObject
 
 +(UIFont *) baseFont:(float) mysize;
@@ -25,5 +29,7 @@
 
 +(NSString *) interpretUserDay:(UIPickerView *) picker;
 +(NSDate *) convertStringToDate:(NSString *) dateStr;
+
++(NSString *) interpretUserSettings:(NSString *) value key:(NSString *)key;
 
 @end

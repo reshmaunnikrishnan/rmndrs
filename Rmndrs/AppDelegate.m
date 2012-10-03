@@ -127,6 +127,12 @@
     }
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Reminders" withExtension:@"momd"];
     __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    
+    [__managedObjectModel setEntities:[NSArray arrayWithObjects:
+                                     [[__managedObjectModel entitiesByName] objectForKey:@"Reminders"],
+                                     [[__managedObjectModel entitiesByName] objectForKey:@"Settings"],
+                                     nil] forConfiguration:@"info"];
+    
     return __managedObjectModel;
 }
 

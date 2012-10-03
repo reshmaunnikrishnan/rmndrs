@@ -178,6 +178,7 @@
 -(void) clickedSettings
 {
     SettingsViewController *settings = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
+    settings.managedObjectContext = [self managedObjectContext];
     [self.navigationController pushViewController:settings animated:YES];
 }
 

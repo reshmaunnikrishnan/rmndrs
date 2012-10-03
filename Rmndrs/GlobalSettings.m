@@ -108,4 +108,17 @@ static NSString *baseBackground = @"Stripe.png";
     return freqstrng;
 }
 
++(NSString *) interpretUserSettings:(NSString *) value key:(NSString *)key {
+    NSString *retString = nil;
+    if ([key isEqualToString:DB_REMINDER_KEY]) {
+        int time = [value intValue];
+        if(time == 1) {
+            retString = [NSString stringWithFormat:@" %d Minute", time];
+        } else {
+            retString = [NSString stringWithFormat:@" %d Minutes", time];
+        }
+    }
+    return retString;
+}
+
 @end
