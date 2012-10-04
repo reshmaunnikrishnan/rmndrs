@@ -7,9 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
+#import "GlobalSettings.h"
 
 @interface settingDetailViewController : UITableViewController{
-
+    NSMutableArray *tones;
+    AVAudioPlayer *player;
+    int nowPlaying;
 }
+
+-(void) customizeTable;
+-(void) toneChanged:(UIButton *)sender;
 
 @end

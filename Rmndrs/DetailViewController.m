@@ -164,7 +164,6 @@
     if (buttonIndex == [actionSheet cancelButtonIndex]) {    
         UIDatePicker *datePicker = (UIDatePicker *) [actionSheet viewWithTag: datePickerTag];
         UIPickerView *freqpicker = (UIPickerView *)[actionSheet viewWithTag:freqPickerTag];
-        NSLog(@"GOT THE DONE EVENT");
         if(datePicker) {
             time = datePicker.date;
             [timeButton setTitle:[GlobalSettings interpretUserTime:time] forState:UIControlStateNormal]; 

@@ -14,6 +14,8 @@
 #define BOOL_TRUE @"TRUE"
 #define BOOL_FALSE @"FALSE"
 
+#define timePickertag 100
+
 @implementation SettingsViewController
 
 @synthesize settingDetail;
@@ -27,6 +29,16 @@
     if (self) {
         // Custom initialization
         self.title = NSLocalizedString(@"Settings", @"Settings");
+        
+        minutesSelection = [[NSMutableArray alloc]init];
+        [minutesSelection addObject:@"1m"];
+        [minutesSelection addObject:@"2m"];
+        [minutesSelection addObject:@"5m"];
+        [minutesSelection addObject:@"10m"];
+        [minutesSelection addObject:@"15m"];
+        [minutesSelection addObject:@"20m"];
+        [minutesSelection addObject:@"30m"];
+
     }
     return self;
 }
@@ -91,7 +103,6 @@
     
     if([settingsType isEqualToString:@"boolean"]) {
         cell.textLabel.text = name;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
         cell.accessoryView = switchView;
         [switchView setOn:(([badgeValue isEqualToString:BOOL_TRUE])? YES : NO) animated:NO];
@@ -118,9 +129,6 @@
     Settings *thisManagedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     NSString *settingsType = [thisManagedObject valueForKey:@"type"];
-    NSString *badgeValue = [thisManagedObject valueForKey:@"value"];
-    NSString *imgValue = [thisManagedObject valueForKey:@"img"];
-
     
     cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -144,8 +152,29 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.settingDetail =[[settingDetailViewController alloc]initWithNibName:@"settingDetailViewController" bundle:nil];    
-    [self.navigationController pushViewController:self.settingDetail animated:YES];
+    Settings *thisManagedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    NSString *name = [thisManagedObject valueForKey:@"name"];
+    if ([name isEqualToString:DB_ALARM_KEY]) {
+        self.settingDetail =[[settingDetailViewController alloc]initWithNibName:@"settingDetailViewController" bundle:nil];    
+        [self.navigationController pushViewController:self.settingDetail animated:YES];
+    }
+    
+    if ([name isEqualToString:DB_REMINDER_KEY]) {
+        [self actionSheetFrequencyPickerPopUp:thisManagedObject];
+    }
+    
+    if ([name isEqualToString:DB_SNOOZE_KEY]) {
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        UISwitch *switchView = (UISwitch *)[cell accessoryView];
+        if (switchView.on) {
+            [switchView setOn:NO animated:YES];
+        } else {
+            [switchView setOn:YES animated:YES];
+        }
+    }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 -(void) customizeTable 
@@ -173,26 +202,28 @@
     for(int i=0; i < [objects count]; ++i) {
         NSManagedObject *mObj = [objects objectAtIndex:i];
         NSString *name = [mObj valueForKey:@"name"];
-        NSLog(@" SETTINGS NAME :: %@", name);
         if([name isEqualToString:DB_ALARM_KEY]) {
             alarmSet = TRUE;
+            alarmManagedObject = mObj;
         }
         if([name isEqualToString:DB_REMINDER_KEY]) {
             reminderBeforeSet = TRUE;
+            reminderManagedObject = mObj;
         }
         if([name isEqualToString:DB_SNOOZE_KEY]) {
             snoozeSet = TRUE;
+            snoozeManagedObject = mObj;
         }
     }   
     
     if(alarmSet == FALSE) {
-        [self insertNewObject:DB_ALARM_KEY type:@"string" value:@"default" img:@"music.png"];
+        alarmManagedObject = [self insertNewObject:DB_ALARM_KEY type:@"string" value:@"flo_rida-blow_my_whistle" img:@"music.png"];
     }
     if(reminderBeforeSet == FALSE) {
-        [self insertNewObject:DB_REMINDER_KEY type:@"interpret" value:@"2m" img:@"alarm.png"];
+        reminderManagedObject = [self insertNewObject:DB_REMINDER_KEY type:@"interpret" value:@"2m" img:@"alarm.png"];
     }
     if(snoozeSet == FALSE) {
-        [self insertNewObject:DB_SNOOZE_KEY type:@"boolean" value:@"FALSE" img:@"snooze.png"];
+        snoozeManagedObject = [self insertNewObject:DB_SNOOZE_KEY type:@"boolean" value:@"FALSE" img:@"snooze.png"];
     }
 }
 
@@ -326,5 +357,70 @@
 }
 
 // Core data Insert End
+
+// Minutes picker Code
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == [actionSheet cancelButtonIndex]) {
+        UIPickerView *freqpicker = (UIPickerView *)[actionSheet viewWithTag:timePickertag];
+        if (freqpicker) {
+            int row = [freqpicker selectedRowInComponent:0];
+            NSString *frequency = [minutesSelection objectAtIndex:row];
+            
+            if(reminderManagedObject) {
+                [reminderManagedObject setValue:frequency forKey:@"value"];
+                NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+                NSError *error = nil;
+                if (![context save:&error]) {
+                    /*
+                     
+                     Replace this implementation with code to handle the error appropriately.
+                     
+                     abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+                     */
+                    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                    abort();
+                }
+            }
+        }
+    }
+}
+
+-(void)actionSheetFrequencyPickerPopUp:(NSManagedObject *) thisManagedObject
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Choose Frequency",@"Choose Frequency")delegate:self cancelButtonTitle:NSLocalizedString(@"Done",@"Done")
+                                               destructiveButtonTitle:NSLocalizedString(@"Cancel",@"Cancel")
+                                                    otherButtonTitles:nil]; 
+    actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+    [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
+    
+    UIPickerView *timePicker = [[UIPickerView alloc]initWithFrame:CGRectMake(30, 160, 260, 120)];
+    timePicker.showsSelectionIndicator = YES;
+    timePicker.dataSource = self;
+    timePicker.delegate=self;
+    
+    [actionSheet setBounds:CGRectMake(0, 0, 320, 485)];
+    
+    [timePicker selectRow:[minutesSelection indexOfObject:[thisManagedObject valueForKey:@"value"]] inComponent:0 animated:NO];
+    
+    [actionSheet addSubview:timePicker];
+    [timePicker setTag:timePickertag];
+    
+    NSLog([reminderManagedObject valueForKey:@"value"]);
+}
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)thePickerView {    
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)thePickerView numberOfRowsInComponent:(NSInteger)component {
+    return [minutesSelection count];
+}
+
+- (NSString *)pickerView:(UIPickerView *)thePickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    return [GlobalSettings interpretUserSettings:[minutesSelection objectAtIndex:row] key:DB_REMINDER_KEY];
+} 
+// Minutes picker End
 
 @end

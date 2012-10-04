@@ -14,9 +14,13 @@
 
 #import "DDBadgeViewCell.h"
 
-@interface SettingsViewController : UITableViewController<NSFetchedResultsControllerDelegate> {
+@interface SettingsViewController : UITableViewController<NSFetchedResultsControllerDelegate, UIActionSheetDelegate, UIPickerViewDataSource, UIPickerViewDelegate> {
     NSManagedObjectContext *managedObjectContext;
-    NSManagedObject *managedObject;
+    NSMutableArray *minutesSelection;
+    
+    NSManagedObject *alarmManagedObject;
+    NSManagedObject *reminderManagedObject;
+    NSManagedObject *snoozeManagedObject;
 }
 @property(strong,nonatomic) settingDetailViewController *settingDetail;
 
@@ -32,5 +36,7 @@
 - (NSManagedObject *)insertNewObject:(NSString *)name type:(NSString *)type value:(NSString *)value img:(NSString *)img;
 
 - (void)prepopulateSettings;
+
+-(void)actionSheetFrequencyPickerPopUp:(NSManagedObject *) managedObject;
 
 @end

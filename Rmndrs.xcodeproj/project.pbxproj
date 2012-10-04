@@ -194,7 +194,6 @@
 		D2CF6E5815F16EA200EC6589 = {
 			isa = PBXGroup;
 			children = (
-				D22579CA161DD1630082BEC7 /* AVFoundation.framework */,
 				D2F2796616187A38003DADEC /* settingDetailViewController.h */,
 				D2F2796716187A38003DADEC /* settingDetailViewController.m */,
 				D2F2796816187A38003DADEC /* settingDetailViewController.xib */,
@@ -215,6 +214,7 @@
 		D2CF6E6615F16EA200EC6589 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D22579CA161DD1630082BEC7 /* AVFoundation.framework */,
 				D200DB85160284D50035C4F4 /* CoreData.framework */,
 				D2CF6ED815F2B14000EC6589 /* AddressBook.framework */,
 				D2CF6ED915F2B14100EC6589 /* AddressBookUI.framework */,
