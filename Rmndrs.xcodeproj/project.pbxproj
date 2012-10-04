@@ -13,6 +13,10 @@
 		D21D13A915F9428800549CB4 /* red_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D21D13A815F9428800549CB4 /* red_button.png */; };
 		D21D13AD15F943A900549CB4 /* delete_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D21D13AC15F943A900549CB4 /* delete_icon.png */; };
 		D21D13AF15F9441400549CB4 /* grey_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D21D13AE15F9441400549CB4 /* grey_button.png */; };
+		D22579CB161DD1630082BEC7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D22579CA161DD1630082BEC7 /* AVFoundation.framework */; };
+		D28D976A161C7D4B00B1BC8F /* flo_rida-blow_my_whistle.m4r in Resources */ = {isa = PBXBuildFile; fileRef = D28D9767161C7D4B00B1BC8F /* flo_rida-blow_my_whistle.m4r */; };
+		D28D976B161C7D4B00B1BC8F /* Maroon_5-Payphone.m4r in Resources */ = {isa = PBXBuildFile; fileRef = D28D9768161C7D4B00B1BC8F /* Maroon_5-Payphone.m4r */; };
+		D28D976C161C7D4B00B1BC8F /* psy-gangnam_style.m4r in Resources */ = {isa = PBXBuildFile; fileRef = D28D9769161C7D4B00B1BC8F /* psy-gangnam_style.m4r */; };
 		D2B065EB1618E41900412313 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B065EA1618E41900412313 /* Settings.m */; };
 		D2C36B8815F3DAEB00A91EC4 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D2C36B8715F3DAEB00A91EC4 /* Default.png */; };
 		D2C36B8B15F3DC8900A91EC4 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2C36B8A15F3DC8900A91EC4 /* Default@2x.png */; };
@@ -56,6 +60,8 @@
 		D2CF6F2415F3819C00EC6589 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2CF6F1C15F3819C00EC6589 /* Icon-Small@2x.png */; };
 		D2CF6F2515F3819C00EC6589 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = D2CF6F1D15F3819C00EC6589 /* iTunesArtwork.png */; };
 		D2CF6F2615F3819C00EC6589 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2CF6F1E15F3819C00EC6589 /* iTunesArtwork@2x.png */; };
+		D2E5D634161C876900BED09E /* play-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D2E5D632161C876900BED09E /* play-icon.png */; };
+		D2E5D635161C876900BED09E /* stop-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D2E5D633161C876900BED09E /* stop-icon.png */; };
 		D2F2795B161396CC003DADEC /* snooze.png in Resources */ = {isa = PBXBuildFile; fileRef = D2F2795A161396CC003DADEC /* snooze.png */; };
 		D2F2796916187A38003DADEC /* settingDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F2796716187A38003DADEC /* settingDetailViewController.m */; };
 		D2F2796A16187A38003DADEC /* settingDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2F2796816187A38003DADEC /* settingDetailViewController.xib */; };
@@ -63,12 +69,16 @@
 
 /* Begin PBXFileReference section */
 		D200DB85160284D50035C4F4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		D200DBFD1605DFDA0035C4F4 /* Reminders.xcdatamodel */ = {isa = PBXFileReference; path = Reminders.xcdatamodel; sourceTree = "<group>"; };
+		D200DBFD1605DFDA0035C4F4 /* Reminders.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Reminders.xcdatamodel; sourceTree = "<group>"; };
 		D200DBFF1605E6BA0035C4F4 /* Reminders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reminders.h; path = ../Reminders.h; sourceTree = "<group>"; };
 		D200DC001605E6BA0035C4F4 /* Reminders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reminders.m; path = ../Reminders.m; sourceTree = "<group>"; };
 		D21D13A815F9428800549CB4 /* red_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_button.png; sourceTree = "<group>"; };
 		D21D13AC15F943A900549CB4 /* delete_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete_icon.png; sourceTree = "<group>"; };
 		D21D13AE15F9441400549CB4 /* grey_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grey_button.png; sourceTree = "<group>"; };
+		D22579CA161DD1630082BEC7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		D28D9767161C7D4B00B1BC8F /* flo_rida-blow_my_whistle.m4r */ = {isa = PBXFileReference; lastKnownFileType = file; path = "flo_rida-blow_my_whistle.m4r"; sourceTree = "<group>"; };
+		D28D9768161C7D4B00B1BC8F /* Maroon_5-Payphone.m4r */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Maroon_5-Payphone.m4r"; sourceTree = "<group>"; };
+		D28D9769161C7D4B00B1BC8F /* psy-gangnam_style.m4r */ = {isa = PBXFileReference; lastKnownFileType = file; path = "psy-gangnam_style.m4r"; sourceTree = "<group>"; };
 		D2A6BF311601FCF200B586B9 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		D2B065E91618E41900412313 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		D2B065EA1618E41900412313 /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
@@ -124,6 +134,8 @@
 		D2CF6F1C15F3819C00EC6589 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "../../../../App Icon [Rounded]/Icon-Small@2x.png"; sourceTree = "<group>"; };
 		D2CF6F1D15F3819C00EC6589 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iTunesArtwork.png; path = "../../../../App Icon [Rounded]/iTunesArtwork.png"; sourceTree = "<group>"; };
 		D2CF6F1E15F3819C00EC6589 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunesArtwork@2x.png"; path = "../../../../App Icon [Rounded]/iTunesArtwork@2x.png"; sourceTree = "<group>"; };
+		D2E5D632161C876900BED09E /* play-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-icon.png"; sourceTree = "<group>"; };
+		D2E5D633161C876900BED09E /* stop-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stop-icon.png"; sourceTree = "<group>"; };
 		D2F2795A161396CC003DADEC /* snooze.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snooze.png; sourceTree = "<group>"; };
 		D2F2796616187A38003DADEC /* settingDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = settingDetailViewController.h; sourceTree = "<group>"; };
 		D2F2796716187A38003DADEC /* settingDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = settingDetailViewController.m; sourceTree = "<group>"; };
@@ -135,6 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D22579CB161DD1630082BEC7 /* AVFoundation.framework in Frameworks */,
 				D200DB86160284D50035C4F4 /* CoreData.framework in Frameworks */,
 				D2CF6EDA15F2B14100EC6589 /* AddressBook.framework in Frameworks */,
 				D2CF6EDB15F2B14100EC6589 /* AddressBookUI.framework in Frameworks */,
@@ -159,6 +172,16 @@
 			name = Data;
 			sourceTree = "<group>";
 		};
+		D28D9766161C7D3600B1BC8F /* Tones */ = {
+			isa = PBXGroup;
+			children = (
+				D28D9767161C7D4B00B1BC8F /* flo_rida-blow_my_whistle.m4r */,
+				D28D9768161C7D4B00B1BC8F /* Maroon_5-Payphone.m4r */,
+				D28D9769161C7D4B00B1BC8F /* psy-gangnam_style.m4r */,
+			);
+			name = Tones;
+			sourceTree = "<group>";
+		};
 		D2A6BF3A16025CD500B586B9 /* badgeview */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +194,7 @@
 		D2CF6E5815F16EA200EC6589 = {
 			isa = PBXGroup;
 			children = (
+				D22579CA161DD1630082BEC7 /* AVFoundation.framework */,
 				D2F2796616187A38003DADEC /* settingDetailViewController.h */,
 				D2F2796716187A38003DADEC /* settingDetailViewController.m */,
 				D2F2796816187A38003DADEC /* settingDetailViewController.xib */,
@@ -226,6 +250,7 @@
 		D2CF6E6E15F16EA200EC6589 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D28D9766161C7D3600B1BC8F /* Tones */,
 				D200DC021605E6C70035C4F4 /* Data */,
 				D2A6BF3A16025CD500B586B9 /* badgeview */,
 				D2CF6EFA15F37FF500EC6589 /* icons */,
@@ -241,6 +266,8 @@
 		D2CF6E9215F16F4A00EC6589 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D2E5D632161C876900BED09E /* play-icon.png */,
+				D2E5D633161C876900BED09E /* stop-icon.png */,
 				D2F2795A161396CC003DADEC /* snooze.png */,
 				D2CF6F1515F3811A00EC6589 /* Default@2x.png */,
 				D21D13AE15F9441400549CB4 /* grey_button.png */,
@@ -369,6 +396,11 @@
 				D21D13AF15F9441400549CB4 /* grey_button.png in Resources */,
 				D2F2795B161396CC003DADEC /* snooze.png in Resources */,
 				D2F2796A16187A38003DADEC /* settingDetailViewController.xib in Resources */,
+				D28D976A161C7D4B00B1BC8F /* flo_rida-blow_my_whistle.m4r in Resources */,
+				D28D976B161C7D4B00B1BC8F /* Maroon_5-Payphone.m4r in Resources */,
+				D28D976C161C7D4B00B1BC8F /* psy-gangnam_style.m4r in Resources */,
+				D2E5D634161C876900BED09E /* play-icon.png in Resources */,
+				D2E5D635161C876900BED09E /* stop-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
